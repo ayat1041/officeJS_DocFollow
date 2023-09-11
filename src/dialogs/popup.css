@@ -1,0 +1,33 @@
+.a-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: rgb(155, 223, 255);
+    border: 1px solid gray;
+    border-radius: 12px;
+    box-shadow: 2px 2px 2px;
+}
+.a-content{
+    /* width: 100%; */
+    margin-block: 12px;
+    margin-inline: 18px;
+    padding-block: 12px;
+    border: 2px solid rgb(0, 110, 255);
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    background-color: rgb(71, 163, 255);
+    box-shadow: 4px 4px 4px rgb(58, 58, 58);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all ease-in 500ms;
+}
+.a-content:hover{
+    background-color: rgb(0, 128, 255);
+}
+.a-container .heading{
+    color: black;
+    font-weight: 700;
+    margin-inline: auto;
+}
