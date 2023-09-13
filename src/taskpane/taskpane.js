@@ -13,6 +13,7 @@ Office.onReady((info) => {
     }
     // document.getElementById("run").onclick = run;
     document.getElementById("create-table").onclick = createTable;
+    document.getElementById("allow-edit").onclick = allowEditRange;
     
   }
 });
@@ -52,14 +53,13 @@ async function createTable() {
   await Excel.run(async (context) => {
 
     // TODO1: Queue table creation logic here.
+    console.log(Excel.AllowEditRange.address);
     const currentWorksheet = context.workbook.worksheets.getActiveWorksheet();
     const expensesTable = currentWorksheet.tables.add("A1:E1", true /*hasHeaders*/);
     expensesTable.name = "ExpensesTable";
-console.log("ayaaat");
     // TODO2: Queue commands to populate the table with data.
     expensesTable.getHeaderRowRange().values =
       [["Date", "Merchant", "Category", "Amount","Positive"]];
-console.log("ayaaat");
     expensesTable.rows.add(null /*add at the end*/, [
       ["1/1/2017", "The Phone Company", "Communications", "420","0"],
       ["1/2/2017", "Northwind Electric Cars", "Transportation", "142.33","0"],
@@ -69,7 +69,6 @@ console.log("ayaaat");
       ["1/15/2017", "Trey Research", "Other", "135","0"],
       ["1/15/2017", "Best For You Organics Company", "Groceries", "97.88","0"]
     ]);
-    console.log("ayaaat");
     // TODO3: Queue commands to format the table.
     expensesTable.columns.getItemAt(3).getRange().numberFormat = [['\u20AC#,##0.00']];
     expensesTable.columns.getItemAt(4).getRange().numberFormat = [['General']];
@@ -84,4 +83,20 @@ console.log("ayaaat");
         console.log("Debug info: " + JSON.stringify(error.debugInfo));
       }
     });
+}
+
+
+async function allowEditRange() {
+  await Excel.run(async function(context) {
+      var sheet = context.workbook.worksheets.getActiveWorksheet();
+
+      // Define the edit range (e.g., A1:B5).
+      sheet.load("protection/protected")
+      await context.sync();
+      sheet.protection.allowEditRanges.add("MyEditRange", "A1:B5");
+
+      await context.sync();
+  }).catch(function(error) {
+      console.log(error);
+  });
 }
